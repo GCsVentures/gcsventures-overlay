@@ -66,6 +66,14 @@ pkg_setup() {
 	:
 }
 
+src_unpack() {
+    if [ "${A}" != "" ]; then
+        unpack ${A}
+    fi
+
+	mv ${WORKDIR}/${P} ${WORKDIR}/${PN}-${P}
+}
+
 src_prepare() {
 	# Update paths
 	sed -e "s|/sbin/lsmod|/bin/lsmod|" \
