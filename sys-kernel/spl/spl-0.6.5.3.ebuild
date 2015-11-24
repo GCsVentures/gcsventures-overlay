@@ -57,22 +57,30 @@ pkg_setup() {
 	kernel_is ge 2 6 32 || die "Linux 2.6.32 or newer required"
 
 	[ ${PV} != "9999" ] && \
-		{ kernel_is le 4 2 || die "Linux 4.2 is the latest supported version."; }
+		{ kernel_is le 4 3 || die "Linux 4.3 is the latest supported version."; }
 
 	check_extra_config
 }
 
+src_unpack() {
+    if [ "${A}" != "" ]; then
+        unpack ${A}
+    fi
+
+	mv ${WORKDIR}/${P} ${WORKDIR}/${PN}-${P}
+}
+
 src_prepare() {
 	# Workaround for hard coded path
-	sed -i "s|/sbin/lsmod|/bin/lsmod|" "${S}/scripts/check.sh" || \
-		die "Cannot patch check.sh"
+	#sed -i "s|/sbin/lsmod|/bin/lsmod|" "${S}/scripts/check.sh" || \
+	#	die "Cannot patch check.sh"
 
 	# splat is unnecessary unless we are debugging
-	use debug || sed -e 's/^subdir-m += splat$//' -i "${S}/module/Makefile.in"
+	#use debug || sed -e 's/^subdir-m += splat$//' -i "${S}/module/Makefile.in"
 
 	# Set module revision number
-	[ ${PV} != "9999" ] && \
-		{ sed -i "s/\(Release:\)\(.*\)1/\1\2${PR}-gentoo/" "${S}/META" || die "Could not set Gentoo release"; }
+	#[ ${PV} != "9999" ] && \
+	#	{ sed -i "s/\(Release:\)\(.*\)1/\1\2${PR}-gentoo/" "${S}/META" || die "Could not set Gentoo release"; }
 
 	autotools-utils_src_prepare
 }
