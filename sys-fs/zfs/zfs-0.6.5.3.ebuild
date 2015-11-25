@@ -120,7 +120,7 @@ src_install() {
 	exeinto /usr/libexec
 	doexe "${T}/zfs-init.sh"
 	systemd_dounit "${T}/zfs.service"
-	doinitd "${FILESDIR}/zed"
+	doinitd "${FILESDIR}/zfs-zed"
 }
 
 pkg_postinst() {
