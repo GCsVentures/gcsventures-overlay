@@ -1,6 +1,6 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Id$
 
 EAPI="5"
 ETYPE="sources"
@@ -12,18 +12,18 @@ S=${WORKDIR}/linux-${KV_FULL}
 
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86"
 HOMEPAGE="https://github.com/GCsVentures/gcsventures-overlay"
-IUSE="deblob experimental"
+IUSE="deblob"
 
-DESCRIPTION="Kernel sources used on the GCsVentures infrastructure. Contains the hardened gentoo patchset for the ${KV_MAJOR}.${KV_MINOR} kernel tree, ZFS 0.6.5.2 and extra choices for CPU optimization"
+DESCRIPTION="Kernel sources used on the GCsVentures infrastructure"
 SRC_URI="https://gcs-ventures.com/distfiles/linux-${PVR}-hardened-gcsventures.tar.xz"
 
 RDEPEND=">=sys-devel/gcc-4.5"
 
 # until we really follow the kernel-2 eclass' expectations, revert to the default unpacking method
 src_unpack() {
-    if [ "${A}" != "" ]; then
-        unpack ${A}
-    fi
+	if [ ${A} != "" ]; then
+		unpack ${A}
+	fi
 }
 
 pkg_postinst() {

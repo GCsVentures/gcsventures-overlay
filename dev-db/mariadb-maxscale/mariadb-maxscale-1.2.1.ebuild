@@ -1,6 +1,6 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header$
+# $Id$
 
 EAPI=5
 
@@ -20,18 +20,17 @@ IUSE="binlog-router jemalloc rabbitmq log-sessions-at-message-level tcmalloc"
 
 RDEPEND=""
 DEPEND="${RDEPEND}
-dev-libs/libaio
->=sys-devel/gcc-4.6.3
->=sys-libs/glibc-2.16.0
->=dev-util/cmake-2.8.12
-dev-db/mariadb[embedded]
-virtual/mysql[embedded]
-jemalloc? ( dev-libs/jemalloc )
-tcmalloc? ( dev-utils/google-perftools )
-rabbitmq? ( dev-libs/rabbitmq-c )"
+	dev-libs/libaio
+	>=sys-devel/gcc-4.6.3
+	>=dev-util/cmake-2.8.12
+	dev-db/mariadb[embedded]
+	virtual/mysql[embedded]
+	jemalloc? ( dev-libs/jemalloc )
+	tcmalloc? ( dev-util/google-perftools )
+	rabbitmq? ( net-libs/rabbitmq-c )"
 
 REQUIRED_USE="
-    ${REQUIRED_USE} tcmalloc? ( !jemalloc ) jemalloc? ( !tcmalloc )
+	${REQUIRED_USE} tcmalloc? ( !jemalloc ) jemalloc? ( !tcmalloc )
 "
 
 pkg_setup() {
@@ -42,41 +41,41 @@ pkg_setup() {
 S="${WORKDIR}/MaxScale-${PVR}"
 
 src_prepare() {
-  if use log-sessions-at-message-level; then
-    epatch "${FILESDIR}"/session.c.log_session_start_at_message_level.patch
-  fi
+	if use log-sessions-at-message-level; then
+		epatch "${FILESDIR}"/session.c.log_session_start_at_message_level.patch
+	fi
 
-  epatch "${FILESDIR}"/remove_dangerous_rpath_12.patch
+	epatch "${FILESDIR}"/remove_dangerous_rpath_12.patch
 }
 
 src_compile() {
-    #append-ldflags "-Wl,-rpath,/usr/lib64"
-    cmake_args="-DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_RPATH=/usr/lib64/mysql/ -DSTATIC_EMBEDDED=FALSE -DINSTALL_SYSTEM_FILES=FALSE -DWITH_SCRIPTS=FALSE"
+	#append-ldflags "-Wl,-rpath,/usr/lib64"
+	cmake_args="-DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_RPATH=/usr/lib64/mysql/ -DSTATIC_EMBEDDED=FALSE -DINSTALL_SYSTEM_FILES=FALSE -DWITH_SCRIPTS=FALSE"
 
 	if use binlog-router; then
-	  cmake_args="$cmake_args -DBUILD_BINLOG=TRUE"
+		cmake_args="$cmake_args -DBUILD_BINLOG=TRUE"
 	fi
 
-    if use rabbitmq; then
-	  cmake_args="$cmake_args -DBUILD_RABBITMQ=TRUE"
+	if use rabbitmq; then
+		cmake_args="$cmake_args -DBUILD_RABBITMQ=TRUE"
 	fi
 
-    if use jemalloc; then
-	  cmake_args="$cmake_args -DWITH_JEMALLOC=TRUE"
+	if use jemalloc; then
+		cmake_args="$cmake_args -DWITH_JEMALLOC=TRUE"
 	fi
 
-    if use tcmalloc; then
-	  cmake_args="$cmake_args -DWITH_TCMALLOC=TRUE"
+	if use tcmalloc; then
+		cmake_args="$cmake_args -DWITH_TCMALLOC=TRUE"
 	fi
 
-	mkdir ${S}/build
-	cd ${S}/build
-	cmake $cmake_args ..
+	mkdir "${S}/build"
+	cd "${S}/build"
+	cmake "$cmake_args" ..
 	emake || die
 }
 
 src_install() {
-	cd ${S}/build
+	cd "${S}/build"
 	emake install DESTDIR="${D}" || die
 	chown -R maxscale:maxscale "${D}"
 	newinitd "${FILESDIR}/init-server-12" ${PN}

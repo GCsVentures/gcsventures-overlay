@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+  <email>guillaume@gcs-ventures.com</email>
+  <name>Guillaume Ceccarelli</name>
+</maintainer>
+<use>
+  <flag name="kernel-builtin">Assume ZFS code is built into the kernel</flag>
+  <flag name="rootfs">Build support for ZFS to be used as root FS</flag>
+  <flag name="test-suite">Build and install the ZFS test suite</flag>
+</use>
+</pkgmetadata>

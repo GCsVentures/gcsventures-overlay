@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <longdescription lang="en">Solaris Porting Layer is a compatibility API providing much of the Solaris Kernel APIs to Linux</longdescription>
+  <maintainer>
+    <email>guillaume@gcs-ventures.com</email>
+    <name>Guillaume Ceccarelli</name>
+  </maintainer>
+  <use>
+    <flag name="debug-log">Enable SPL debug log</flag>
+  </use>
+</pkgmetadata>

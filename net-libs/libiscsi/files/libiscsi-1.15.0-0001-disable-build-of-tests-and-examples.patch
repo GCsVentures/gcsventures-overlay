@@ -1,9 +1,0 @@
---- a/Makefile.am 2015-06-21 15:50:50.000000000 +0000
-+++ b/Makefile.am 2015-10-11 13:08:01.371242376 +0000
-@@ -1,5 +1,5 @@
- # Generic definitions
--SUBDIRS = lib doc utils test-tool tests examples
-+SUBDIRS = lib doc utils
- 
- ACLOCAL_AMFLAGS =-I m4
- AUTOMAKE_OPTIONS = foreign subdir-objects

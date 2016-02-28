@@ -1,6 +1,6 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Id$
 
 EAPI=5
 
@@ -18,8 +18,7 @@ IUSE=""
 
 DEPEND="dev-perl/DBD-mysql \
         dev-perl/Module-Install"
-RDEPEND="${DEPEND}
-         !=dev-lang/perl-5.22.0"
+RDEPEND="${DEPEND} !=dev-lang/perl-5.22.0"
 
 src_configure() {
 	perl Makefile.PL PREFIX=/usr INSTALLSITEMAN1DIR=/usr/share/man/man1

@@ -1,6 +1,6 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Id$
 
 EAPI="4"
 AUTOTOOLS_AUTORECONF="1"
@@ -17,7 +17,7 @@ else
 	KEYWORDS="~amd64 ~arm ~ppc ~ppc64"
 fi
 
-DESCRIPTION="The Solaris Porting Layer is a Linux kernel module which provides many of the Solaris kernel APIs"
+DESCRIPTION="The Solaris Porting Layer is a Solaris compatibility layer for the Linux kernel"
 HOMEPAGE="http://zfsonlinux.org/"
 
 LICENSE="GPL-2"
@@ -63,11 +63,11 @@ pkg_setup() {
 }
 
 src_unpack() {
-    if [ "${A}" != "" ]; then
-        unpack ${A}
-    fi
+	if [ ${A} != "" ]; then
+		unpack ${A}
+	fi
 
-	mv ${WORKDIR}/${P} ${WORKDIR}/${PN}-${P}
+	mv "${WORKDIR}/${P}" "${WORKDIR}/${PN}-${P}"
 }
 
 src_prepare() {
