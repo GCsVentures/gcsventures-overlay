@@ -25,7 +25,7 @@ start() {
 }
 
 stop() {
-      ebegin "Stoping Maxscale"
+      ebegin "Stopping Maxscale"
       start-stop-daemon --stop --pidfile /run/maxscale/maxscale.pid --name maxscale
       eend $?
 }

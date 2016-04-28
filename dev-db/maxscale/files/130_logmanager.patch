@@ -1,0 +1,24 @@
+diff -ruN a/log_manager/log_manager.cc b/log_manager/log_manager.cc
+--- a/log_manager/log_manager.cc        2016-04-25 12:20:32.464376000 +0000
++++ b/log_manager/log_manager.cc        2016-04-25 12:21:23.634376000 +0000
+@@ -2794,19 +2794,15 @@
+ 
+                 if (augmentation_len)
+                 {
+-                    int len = 0;
+-
+                     switch (augmentation)
+                     {
+                     case MXS_LOG_AUGMENT_WITH_FUNCTION:
+-                        len = sprintf(augmentation_text, FORMAT_FUNCTION, function);
++                        sprintf(augmentation_text, FORMAT_FUNCTION, function);
+                         break;
+ 
+                     default:
+                         assert(!true);
+                     }
+-
+-                    assert(len == augmentation_len);
+                 }
+ 
+                 va_start(valist, format);
