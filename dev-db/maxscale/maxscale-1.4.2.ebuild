@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header$
+# $Id$
 
 EAPI=6
 
@@ -31,8 +31,8 @@ sys-devel/bison
 sys-devel/flex
 dev-db/mariadb[embedded,static-libs]
 jemalloc? ( dev-libs/jemalloc )
-tcmalloc? ( dev-utils/google-perftools )
-rabbitmq? ( dev-libs/rabbitmq-c )"
+tcmalloc? ( dev-util/google-perftools )
+rabbitmq? ( net-libs/rabbitmq-c )"
 
 REQUIRED_USE="
     ${REQUIRED_USE} tcmalloc? ( !jemalloc ) jemalloc? ( !tcmalloc )
