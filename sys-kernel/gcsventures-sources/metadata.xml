@@ -2,7 +2,7 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 <longdescription lang="en">
-Kernel sources used on the GCsVentures infrastructure. Contains the regular gentoo patchset, ZFS and extra choices for CPU optimization
+Kernel sources used on the GCsVentures infrastructure. Contains the hardened gentoo patchset, ZFS and extra options for CPU optimization. Requires GCC >=4.9.0.
 </longdescription>
 <maintainer>
   <email>guillaume@gcs-ventures.com</email>
