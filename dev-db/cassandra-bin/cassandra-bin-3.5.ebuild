@@ -13,12 +13,13 @@ SRC_URI="mirror://apache/cassandra/${PV}/apache-cassandra-${PV}-bin.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="$(get_version_component_range 1-2)"
 KEYWORDS="~x86 ~amd64"
-IUSE="systemd"
+IUSE="jemalloc systemd"
 
 DEPEND="
     >=virtual/jdk-1.5
     "
 RDEPEND="${DEPEND}
+    jemalloc? ( dev-libs/jemalloc )
     systemd? ( sys-apps/systemd )
     "
 
