@@ -10,6 +10,7 @@ DAEMON=${_CASSANDRA_DIR}/bin/cassandra
 DAEMON_OPTS="-p $PIDFILE"
 USER="cassandra"
 
+export CASSANDRA_CONF="${_CASSANDRA_DIR}/conf"
 . ${_CASSANDRA_DIR}/conf/cassandra-env.sh
 
 start() {
