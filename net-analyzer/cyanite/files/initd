@@ -23,11 +23,11 @@ start() {
 
   start-stop-daemon \
     --start \
-    --exec "${JAVA_HOME}/bin/java /usr/share/cyanite/lib/cyanite.jar" \
+    --exec "${JAVA_HOME}/bin/java" \
     --user ${CYANITE_USER} \
     --group ${CYANITE_GROUP} \
     --pidfile "${CYANITE_PID_FILE}" \
-    -- -f "${CYANITE_CONFIG_FILE}" ${CYANITE_OPTIONS}
+    -- -jar /usr/share/cyanite/lib/cyanite.jar -f "${CYANITE_CONFIG_FILE}" ${CYANITE_OPTIONS}
 }
 
 stop() {
