@@ -2,7 +2,7 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
   <longdescription lang="en">Solaris Porting Layer is a compatibility API providing much of the Solaris Kernel APIs to Linux</longdescription>
-  <maintainer>
+  <maintainer type="person">
     <email>guillaume@gcs-ventures.com</email>
     <name>Guillaume Ceccarelli</name>
   </maintainer>

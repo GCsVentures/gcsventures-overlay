@@ -4,7 +4,7 @@
 <longdescription lang="en">
 Kernel sources used on the GCsVentures infrastructure. Contains the hardened gentoo patchset, ZFS and extra options for CPU optimization. Requires GCC >=4.9.0.
 </longdescription>
-<maintainer>
+<maintainer type="person">
   <email>guillaume@gcs-ventures.com</email>
   <name>Guillaume Ceccarelli</name>
 </maintainer>
