@@ -1,0 +1,23 @@
+logging:
+  level: info
+  console: true
+  files:
+    - "/var/log/cyanite/cyanite.log"
+input:
+  - type: "carbon"
+    port: 2003
+store:
+  cluster: "127.0.0.1"
+  keyspace: "metric"
+index:
+  type: "cassandra"
+  cluster: "127.0.0.1"
+  keyspace: "metric"
+api:
+  host: "127.0.0.1"
+  port: 8080
+  disabled: false
+engine:
+  rules:
+    default:
+      - "1m:1h:1d"

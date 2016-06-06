@@ -1,0 +1,4 @@
+CYANITE_CONFIG_FILE="/etc/cyanite.yml"
+CYANITE_GROUP="cyanite"
+CYANITE_USER="cyanite"
+CYANITE_OPTIONS=""
