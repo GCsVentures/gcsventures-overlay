@@ -14,13 +14,16 @@ EGIT_REPO_URI="git://github.com/pyr/cyanite"
 LICENSE="MISC-FREE"
 SLOT="0"
 KEYWORDS=""
-IUSE=""
+IUSE="+netty-epoll"
 
 DEPEND="
   dev-java/leiningen-bin
   virtual/jdk:1.8
 "
-RDEPEND="${DEPEND}"
+RDEPEND="
+  ${DEPEND}
+  netty-epoll? ( dev-java/netty-transport-native-epoll )
+"
 
 pkg_setup() {
   enewgroup cyanite
@@ -45,4 +48,7 @@ src_install() {
 
   diropts -m0750 -o cyanite -g cyanite
   keepdir /var/log/cyanite
+
+  dodoc -r "${S}/doc"
+  docompress -x doc
 }
