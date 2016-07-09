@@ -10,7 +10,7 @@ inherit ruby-fakegem
 DESCRIPTION="an open source data collector designed to scale and simplify log management."
 HOMEPAGE="https://rubygems.org/gems/fluentd"
 
-LICENSE="GPL-2+ Ruby"
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
