@@ -5,7 +5,7 @@
 EAPI=5
 USE_RUBY="ruby22 ruby23"
 
-inherit ruby-fakegem
+inherit ruby-fakegem user
 
 DESCRIPTION="an open source data collector designed to scale and simplify log management."
 HOMEPAGE="https://rubygems.org/gems/fluentd"
@@ -14,6 +14,17 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+
+pkg_setup() {
+	enewgroup fluentd
+	enewuser fluentd -1 -1 -1 fluentd
+}
+
+src_install() {
+	ruby-ng_src_install
+	newinitd ${FILESDIR}/fluentd.initd fluentd
+	newconfd ${FILESDIR}/fluentd.confd fluentd
+}
 
 ruby_add_rdepend ">=dev-ruby/coolio-1.4.3"
 ruby_add_rdepend "!>=dev-ruby/coolio-2.0.0"
