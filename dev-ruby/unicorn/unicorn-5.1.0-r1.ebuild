@@ -15,6 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
+ruby_add_rdepend "dev-ruby/bundler"
 ruby_add_rdepend ">=dev-ruby/kgio-2.6"
 ruby_add_rdepend ">=dev-ruby/raindrops-0.7"
 

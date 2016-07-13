@@ -28,14 +28,27 @@ start() {
   fi
 
   ebegin "Starting unicorn"
-  start-stop-daemon --start \
-    --pidfile ${UNICORN_PID_FILE} \
-    --exec ${unicorn_binary} \
-    --user ${UNICORN_SERVICE_USER}:${UNICORN_SERVICE_GROUP} \
-    -- \
-      -D \
-      -E ${ENV} \
-      -c ${UNICORN_CONFIG_FILE}
+  if [ "x${BUNDLE_EXEC}" == "xYES" ]; then
+    start-stop-daemon --start \
+      --pidfile ${UNICORN_PID_FILE} \
+      --exec /usr/bin/bundle \
+      --user ${UNICORN_SERVICE_USER}:${UNICORN_SERVICE_GROUP} \
+      -d "${APP_ROOT}"
+      -- \
+        exec ${unicorn_binary}
+        -D \
+        -E ${ENV} \
+        -c ${UNICORN_CONFIG_FILE}
+  else
+    start-stop-daemon --start \
+      --pidfile ${UNICORN_PID_FILE} \
+      --exec /usr/bin/${unicorn_binary} \
+      --user ${UNICORN_SERVICE_USER}:${UNICORN_SERVICE_GROUP} \
+      -- \
+        -D \
+        -E ${ENV} \
+        -c ${UNICORN_CONFIG_FILE}
+  fi
   eend $? "Failed to start unicorn"
 }
 
