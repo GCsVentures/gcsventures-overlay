@@ -35,7 +35,7 @@ start() {
       --user ${UNICORN_SERVICE_USER}:${UNICORN_SERVICE_GROUP} \
       -d "${APP_ROOT}" \
       -- \
-        exec ${unicorn_binary}
+        exec ${unicorn_binary} \
         -D \
         -E ${ENV} \
         -c ${UNICORN_CONFIG_FILE}
