@@ -34,6 +34,6 @@ each_ruby_compile() {
 all_ruby_install() {
 	all_fakegem_install
 
-	newinitd "${FILESDIR}"/unicorn.initd-r2 unicorn
+	newinitd "${FILESDIR}"/unicorn.initd unicorn
 	newconfd "${FILESDIR}"/unicorn.confd unicorn
 }

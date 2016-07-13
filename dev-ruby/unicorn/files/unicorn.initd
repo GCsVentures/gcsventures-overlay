@@ -22,9 +22,9 @@ start() {
   fi
 
   if [ "x${UNICORN_RAILS}" == "xYES" ]; then
-    unicorn_binary=/usr/bin/unicorn_rails
+    unicorn_binary=unicorn_rails
   else
-    unicorn_binary=/usr/bin/unicorn
+    unicorn_binary=unicorn
   fi
 
   ebegin "Starting unicorn"
