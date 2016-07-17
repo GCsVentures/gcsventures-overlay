@@ -14,3 +14,12 @@ LICENSE="GPL-2+ Ruby"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+
+each_ruby_configure() {
+    ${RUBY} -Cext/${PN} extconf.rb || die
+}
+
+each_ruby_compile() {
+    emake V=1 -Cext/${PN}
+    cp ext/${PN}/${PN}.so lib/strptime/ || die
+}
