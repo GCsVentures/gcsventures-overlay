@@ -22,7 +22,7 @@ start() {
   [ -e "$FLUENTD_LOG_FILE" ] || \
     install -d -o${FLUENTD_USER} -g${FLUENTD_GROUP} -m750 `dirname "$FLUENTD_LOG_FILE"`
   
-  ebegin "Starting $0"
+  ebegin "Starting ${SVCNAME}"
 
   start-stop-daemon \
     --start \
@@ -41,7 +41,7 @@ start() {
 }
 
 stop() {
-  ebegin "Stopping $0"
+  ebegin "Stopping ${SVCNAME}"
 
   start-stop-daemon \
     --stop \
