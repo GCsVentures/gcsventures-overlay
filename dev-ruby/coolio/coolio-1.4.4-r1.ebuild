@@ -55,9 +55,12 @@ all_ruby_prepare() {
 
 each_ruby_configure() {
 	${RUBY} -Cext/cool.io extconf.rb || die
+	${RUBY} -Cext/iobuffer extconf.rb || die
 }
 
 each_ruby_compile() {
 	emake V=1 -Cext/cool.io
 	cp ext/cool.io/cool.io_ext$(get_modname) lib/ || die
+	emake V=1 -Cext/iobuffer
+	cp ext/iobuffer/iobuffer_ext$(get_modname) lib/ || die
 }
