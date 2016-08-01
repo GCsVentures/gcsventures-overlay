@@ -64,7 +64,7 @@ stop() {
   sleep 3
   if [ -f ${UNICORN_PID_FILE} ]; then
     einfo "Sending TERM to unicorn"
-    start-stop-daemon --stop --pidfile ${UNICORN_PID_FILE}
+    start-stop-daemon -R 10 --stop --pidfile ${UNICORN_PID_FILE}
   fi
   eend $? "Failed to stop unicorn"
 }
