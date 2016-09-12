@@ -1,0 +1,27 @@
+diff -ruN a/etc/init.d/zfs-zed.in b/etc/init.d/zfs-zed.in
+--- a/etc/init.d/zfs-zed.in	2016-09-12 21:49:48.791434071 +0200
++++ b/etc/init.d/zfs-zed.in	2016-09-12 21:53:09.290501666 +0200
+@@ -62,21 +62,8 @@
+ 
+ 	zfs_action "Stopping ZFS Event Daemon" zfs_daemon_stop \
+ 	   "$ZED_PIDFILE" "$ZED" "$ZED_NAME"
+-	if [ "$?" -eq "0" ]
+-	then
+-		# Let's see if we have any pools imported
+-		pools=$("$ZPOOL" list -H -oname)
+-		if [ -z "$pools" ]
+-		then
+-			# No pools imported, it is/should be safe/possible to
+-			# unload modules.
+-			zfs_action "Unloading modules" rmmod zfs zunicode \
+-			    zavl zcommon znvpair spl
+-			return "$?"
+-		fi
+-	else
+-		return "$?"
+-	fi
++	
++	return "$?"
+ }
+ 
+ do_status()

@@ -2,27 +2,25 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI="4"
-AUTOTOOLS_AUTORECONF="1"
+EAPI="5"
+
+if [[ ${PV} == "9999" ]] ; then
+	AUTOTOOLS_AUTORECONF="1"
+	EGIT_REPO_URI="https://github.com/zfsonlinux/${PN}.git"
+	inherit git-r3
+else
+	SRC_URI="https://github.com/zfsonlinux/zfs/releases/download/zfs-${PV}/${P}.tar.gz"
+	KEYWORDS=""
+fi
 
 inherit flag-o-matic linux-info linux-mod autotools-utils
 
-if [[ ${PV} == "9999" ]] ; then
-	inherit git-2
-	EGIT_REPO_URI="https://github.com/zfsonlinux/${PN}.git"
-else
-	inherit eutils versionator
-	SRC_URI="https://github.com/zfsonlinux/${PN}/archive/${P}.tar.gz"
-	S="${WORKDIR}/${PN}-${P}"
-	KEYWORDS="~amd64 ~arm ~ppc ~ppc64"
-fi
-
-DESCRIPTION="The Solaris Porting Layer is a Solaris compatibility layer for the Linux kernel"
+DESCRIPTION="The Solaris Porting Layer is a Linux kernel module which provides many of the Solaris kernel APIs"
 HOMEPAGE="http://zfsonlinux.org/"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="custom-cflags debug debug-log"
+IUSE="custom-cflags debug"
 RESTRICT="debug? ( strip ) test"
 
 COMMON_DEPEND="dev-lang/perl
@@ -35,12 +33,12 @@ RDEPEND="${COMMON_DEPEND}
 
 AT_M4DIR="config"
 AUTOTOOLS_IN_SOURCE_BUILD="1"
+DOCS=( AUTHORS DISCLAIMER )
 
 pkg_setup() {
 	linux-info_pkg_setup
 	CONFIG_CHECK="
 		!DEBUG_LOCK_ALLOC
-		!GRKERNSEC_HIDESYM
 		KALLSYMS
 		!PAX_KERNEXEC_PLUGIN_METHOD_OR
 		!PAX_SIZE_OVERFLOW
@@ -57,30 +55,22 @@ pkg_setup() {
 	kernel_is ge 2 6 32 || die "Linux 2.6.32 or newer required"
 
 	[ ${PV} != "9999" ] && \
-		{ kernel_is le 4 5 || die "Linux 4.5 is the latest supported version."; }
+		{ kernel_is le 4 6 || die "Linux 4.6 is the latest supported version."; }
 
 	check_extra_config
 }
 
-src_unpack() {
-	if [ ${A} != "" ]; then
-		unpack ${A}
-	fi
-
-	mv "${WORKDIR}/${P}" "${WORKDIR}/${PN}-${P}"
-}
-
 src_prepare() {
 	# Workaround for hard coded path
-	#sed -i "s|/sbin/lsmod|/bin/lsmod|" "${S}/scripts/check.sh" || \
-	#	die "Cannot patch check.sh"
+	sed -i "s|/sbin/lsmod|/bin/lsmod|" "${S}/scripts/check.sh" || \
+		die "Cannot patch check.sh"
 
 	# splat is unnecessary unless we are debugging
-	#use debug || sed -e 's/^subdir-m += splat$//' -i "${S}/module/Makefile.in"
+	use debug || { sed -e 's/^subdir-m += splat$//' -i "${S}/module/Makefile.in" || die ; }
 
 	# Set module revision number
-	#[ ${PV} != "9999" ] && \
-	#	{ sed -i "s/\(Release:\)\(.*\)1/\1\2${PR}-gentoo/" "${S}/META" || die "Could not set Gentoo release"; }
+	[ ${PV} != "9999" ] && \
+		{ sed -i "s/\(Release:\)\(.*\)1/\1\2${PR}-gentoo/" "${S}/META" || die "Could not set Gentoo release"; }
 
 	autotools-utils_src_prepare
 }
@@ -97,14 +87,12 @@ src_configure() {
 		--with-linux="${KV_DIR}"
 		--with-linux-obj="${KV_OUT_DIR}"
 		$(use_enable debug)
-		$(use_enable debug-log)
 	)
 	autotools-utils_src_configure
 }
 
 src_install() {
 	autotools-utils_src_install INSTALL_MOD_PATH="${INSTALL_MOD_PATH:-$EROOT}"
-	dodoc AUTHORS DISCLAIMER README.markdown
 }
 
 pkg_postinst() {
