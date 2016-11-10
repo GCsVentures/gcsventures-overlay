@@ -48,11 +48,6 @@ pkg_setup() {
 S="${WORKDIR}/MaxScale-${PVR}"
 
 src_prepare() {
-#  if use log-sessions-at-message-level; then
-#    epatch "${FILESDIR}"/session.c.log_session_start_at_message_level.patch
-#  fi
-#
-#  epatch "${FILESDIR}"/remove_dangerous_rpath_12.patch
   eapply "${FILESDIR}"/141_logmanager.patch
   eapply "${FILESDIR}"/141_rpath.patch
   eapply_user
@@ -73,21 +68,7 @@ src_configure() {
 	cmake-utils_src_configure
 }
 
-#src_compile() {
-#    #append-ldflags "-Wl,-rpath,/usr/lib64"
-#	# TODO TODO TODO : Check cmake args for 1.4.1
-#    cmake_args="-DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_RPATH=/usr/lib64/mysql/ -DSTATIC_EMBEDDED=FALSE -DINSTALL_SYSTEM_FILES=FALSE -DWITH_SCRIPTS=FALSE"
-#
-#	mkdir ${S}/build
-#	cd ${S}/build
-#	cmake $cmake_args ..
-#	emake || die
-#}
-
 src_install() {
-	#cd ${S}/build
-	#emake install DESTDIR="${D}" || die
-	#chown -R maxscale:maxscale "${D}"
 	newinitd "${FILESDIR}/init-server-12" ${PN}
 	newconfd "${FILESDIR}/confd-server-12" ${PN}
 	local DOCS=( README "${BUILD_DIR}"/Changelog.txt "${BUILD_DIR}"/ReleaseNotes.txt )
@@ -96,7 +77,6 @@ src_install() {
 	rm "${D}usr/share/${PN}/README" "${D}usr/share/${PN}/Changelog.txt" \
 		"${D}usr/share/${PN}/LICENSE" "${D}usr/share/${PN}/COPYRIGHT" \
 		"${D}usr/share/${PN}/ReleaseNotes.txt" || die
-	#newinitd "${FILESDIR}/${PN}-init.d" ${PN}
 	keepdir /var/log/maxscale /var/lib/maxscale/data
 	fowners maxscale:maxscale /var/log/maxscale \
 		/var/lib/maxscale/data \
