@@ -19,24 +19,17 @@ IUSE="test"
 RDEPEND="dev-python/configargparse[${PYTHON_USEDEP}]
 	>=dev-python/botocore-1.4.29[${PYTHON_USEDEP}]
 	>=dev-python/colorama-0.2.5[${PYTHON_USEDEP}]
-	!>=dev-python/colorama-0.3.3[${PYTHON_USEDEP}]
+	!>dev-python/colorama-0.3.7[${PYTHON_USEDEP}]
 	>=dev-python/docutils-0.10[${PYTHON_USEDEP}]
 	>=dev-python/rsa-3.1.2[${PYTHON_USEDEP}]
-	!>=dev-python/rsa-3.5.0[${PYTHON_USEDEP}]
+	!>dev-python/rsa-3.5.0[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
-    =dev-python/s3transfer-0.0.1[${PYTHON_USEDEP}]"
+    >=dev-python/s3transfer-0.1.2[${PYTHON_USEDEP}]
+	=dev-python/wheel-0.24.0
+	>=dev-python/tox-2.3.1
+	!>=dev-python/tox-3.0.0"
 DEPEND="${RDEPEND}
 	test? ( dev-python/nose[${PYTHON_USEDEP}] )"
-
-src_prepare() {
-	# unbundle requests https://github.com/boto/botocore/issues/266
-	rm -Rf botocore/vendored || die "rm failed"
-	grep -rl 'botocore.vendored' | xargs \
-		sed -i -e "/import requests/s/from botocore.vendored //" \
-		-e "/^from/s/botocore.vendored.//" \
-		-e "s/'botocore.vendored./'/" \
-		|| die "sed failed"
-}
 
 python_test() {
 	# Only run unit tests
