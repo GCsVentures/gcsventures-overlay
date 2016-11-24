@@ -19,7 +19,6 @@ IUSE="doc test"
 CDEPEND="
 	>=dev-python/docutils-0.10[${PYTHON_USEDEP}]
 	>=dev-python/jmespath-0.7.1[${PYTHON_USEDEP}]
-	<dev-python/jmespath-1.0.0[${PYTHON_USEDEP}]
 	>=dev-python/python-dateutil-2.1[${PYTHON_USEDEP}]
 	<dev-python/python-dateutil-3.0.0[${PYTHON_USEDEP}]
 	>=dev-python/tox-2.3.1[${PYTHON_USEDEP}]
