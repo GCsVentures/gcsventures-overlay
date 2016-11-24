@@ -27,7 +27,8 @@ RDEPEND="dev-python/configargparse[${PYTHON_USEDEP}]
     >=dev-python/s3transfer-0.1.2[${PYTHON_USEDEP}]
 	=dev-python/wheel-0.24.0
 	>=dev-python/tox-2.3.1
-	!>=dev-python/tox-3.0.0"
+	!>=dev-python/tox-3.0.0
+	>=dev-python/pyyaml-3.10"
 DEPEND="${RDEPEND}
 	test? ( dev-python/nose[${PYTHON_USEDEP}] )"
 
