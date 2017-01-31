@@ -6,8 +6,8 @@ EAPI=5
 USE_RUBY="ruby22 ruby23"
 
 EGIT_REPO_URI="git://github.com/GCsVentures/${PN}.git"
-EGIT_BRANCH="0.14.7_msgpack_fix"
-EGIT_COMMIT="0f7f409b3dbe0194c0c8a5703f0c47b48bd86cde"
+EGIT_BRANCH="bytesize_fix"
+EGIT_COMMIT="d71e3a8de2ee2dbdb73f2ac10f414116d46a6119"
 
 inherit ruby-fakegem
 SRC_URI=""
