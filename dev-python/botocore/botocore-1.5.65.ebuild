@@ -1,9 +1,8 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
-EAPI=5
-PYTHON_COMPAT=( python2_7 python3_4 python3_5 )
+EAPI=6
+PYTHON_COMPAT=( python2_7 python3_4 python3_5 python3_6 )
 
 inherit distutils-r1
 
@@ -19,11 +18,9 @@ IUSE="doc test"
 CDEPEND="
 	>=dev-python/docutils-0.10[${PYTHON_USEDEP}]
 	>=dev-python/jmespath-0.7.1[${PYTHON_USEDEP}]
+	<dev-python/jmespath-1.0.0[${PYTHON_USEDEP}]
 	>=dev-python/python-dateutil-2.1[${PYTHON_USEDEP}]
 	<dev-python/python-dateutil-3.0.0[${PYTHON_USEDEP}]
-	>=dev-python/tox-2.3.1[${PYTHON_USEDEP}]
-	<dev-python/tox-3.0.0[${PYTHON_USEDEP}]
-	=dev-python/wheel-0.24.0[${PYTHON_USEDEP}]
 "
 DEPEND="
 	dev-python/setuptools[${PYTHON_USEDEP}]
@@ -31,13 +28,12 @@ DEPEND="
 		>=dev-python/guzzle_sphinx_theme-0.7.10[${PYTHON_USEDEP}]
 		<dev-python/guzzle_sphinx_theme-0.8[${PYTHON_USEDEP}]
 		>=dev-python/sphinx-1.1.3[${PYTHON_USEDEP}]
-		<dev-python/sphinx2-1.3[${PYTHON_USEDEP}]
+		<dev-python/sphinx-1.3[${PYTHON_USEDEP}]
 	)
 	test? (
 		${CDEPEND}
-		=dev-python/behave-1.2.5[${PYTHON_USEDEP}]
-		=dev-python/mock-1.3.0[${PYTHON_USEDEP}]
-		=dev-python/nose-1.3.0[${PYTHON_USEDEP}]
+		~dev-python/mock-1.3.0[${PYTHON_USEDEP}]
+		dev-python/nose[${PYTHON_USEDEP}]
 	)
 "
 RDEPEND="${CDEPEND}"
@@ -47,7 +43,7 @@ python_compile_all() {
 }
 
 python_test() {
-	nosetests tests/unit || die "tests failed under ${EPYTHON}"
+	nosetests -v tests/unit || die "tests failed under ${EPYTHON}"
 }
 
 python_install_all() {
