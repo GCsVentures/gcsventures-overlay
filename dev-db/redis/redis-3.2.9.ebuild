@@ -34,7 +34,7 @@ pkg_setup() {
 
 src_prepare() {
 	epatch \
-		"${FILESDIR}"/${PN}-2.8.3-shared.patch \
+		"${FILESDIR}"/${PN}-3.2.5-shared.patch \
 		"${FILESDIR}"/${PN}-3.2.3-config.patch \
 		"${FILESDIR}"/${PN}-3.2.3-sharedlua.patch
 	eapply_user
@@ -62,7 +62,9 @@ src_prepare() {
 	done
 	# autodetection of compiler and settings; generates the modified Makefiles
 	cp "${FILESDIR}"/configure.ac-3.2 configure.ac
-	sed -i	-e "s:AC_CONFIG_FILES(\[Makefile\]):AC_CONFIG_FILES([${makefiles}]):g" \
+	sed -i	\
+		-e "/^AC_INIT/s|, [0-9].+, |, $PV, |" \
+		-e "s:AC_CONFIG_FILES(\[Makefile\]):AC_CONFIG_FILES([${makefiles}]):g" \
 		configure.ac || die "Sed failed for configure.ac"
 	eautoreconf
 }
