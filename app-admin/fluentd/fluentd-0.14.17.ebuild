@@ -27,7 +27,7 @@ src_install() {
 }
 
 ruby_add_rdepend ">=dev-ruby/coolio-1.4.5"
-ruby_add_rdepend "!>=dev-ruby/coolio-1.5.0"
+ruby_add_rdepend "!>=dev-ruby/coolio-2.0.0"
 ruby_add_rdepend ">=dev-ruby/http_parser_rb-0.5.1"
 ruby_add_rdepend "!>=dev-ruby/http_parser_rb-0.7.0"
 ruby_add_rdepend ">=dev-ruby/json-1.4.3"
