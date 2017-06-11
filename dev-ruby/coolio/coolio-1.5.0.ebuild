@@ -5,7 +5,7 @@
 EAPI=5
 
 # iobuffer: -rbx
-USE_RUBY="ruby22 ruby23"
+USE_RUBY="ruby22 ruby23 ruby24"
 
 RUBY_FAKEGEM_RECIPE_TEST="rspec3"
 RUBY_FAKEGEM_EXTRADOC="CHANGES.md README.md"
