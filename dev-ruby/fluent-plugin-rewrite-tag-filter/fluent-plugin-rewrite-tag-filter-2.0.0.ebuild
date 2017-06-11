@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-USE_RUBY="ruby22 ruby23"
+USE_RUBY="ruby22 ruby23 ruby24"
 
 EGIT_REPO_URI="git://github.com/okkez/${PN}.git"
 EGIT_BRANCH="migrate-v0.14-api"

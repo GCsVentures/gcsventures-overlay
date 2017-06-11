@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-USE_RUBY="ruby22 ruby23"
+USE_RUBY="ruby22 ruby23 ruby24"
 
 EGIT_REPO_URI="git://github.com/GCsVentures/${PN}.git"
 EGIT_COMMIT="d3d1992d14cd8bc3576d8f7f0ea73332de63d963"

@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-USE_RUBY="ruby22 ruby23"
+USE_RUBY="ruby22 ruby23 ruby24"
 
 EGIT_REPO_URI="git://github.com/emsearcy/${PN}.git"
 EGIT_COMMIT="027416757aca42e98b2e21bc8dec829b25a57e44"

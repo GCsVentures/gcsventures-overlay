@@ -4,7 +4,7 @@
 
 EAPI=5
 # rbx: Kernel(Autoload)#allocate (method_missing)
-USE_RUBY="ruby22 ruby23"
+USE_RUBY="ruby22 ruby23 ruby24"
 
 RUBY_FAKEGEM_TASK_DOC=""
 RUBY_FAKEGEM_EXTRADOC="CHANGES.md README.md"
