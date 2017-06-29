@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-USE_RUBY="ruby22 ruby23"
+USE_RUBY="ruby22 ruby23 ruby24"
 
 inherit ruby-fakegem user
 
@@ -33,7 +33,7 @@ ruby_add_rdepend "!>=dev-ruby/http_parser_rb-0.7.0"
 ruby_add_rdepend ">=dev-ruby/json-1.4.3"
 ruby_add_rdepend ">=dev-ruby/msgpack-0.7.0"
 ruby_add_rdepend "!>=dev-ruby/msgpack-2.0.0"
-ruby_add_rdepend ">=dev-ruby/serverengine-2.0.0"
+ruby_add_rdepend ">=dev-ruby/serverengine-2.0.4"
 ruby_add_rdepend "!>=dev-ruby/serverengine-3.0.0"
 ruby_add_rdepend ">=dev-ruby/sigdump-0.2.2"
 ruby_add_rdepend "!>=dev-ruby/sigdump-0.3.0"
