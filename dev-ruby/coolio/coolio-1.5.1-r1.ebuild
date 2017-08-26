@@ -1,11 +1,9 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
-EAPI=5
+EAPI=6
 
-# iobuffer: -rbx
-USE_RUBY="ruby22 ruby23 ruby24"
+USE_RUBY="ruby21 ruby22 ruby23 ruby24"
 
 RUBY_FAKEGEM_RECIPE_TEST="rspec3"
 RUBY_FAKEGEM_EXTRADOC="CHANGES.md README.md"
@@ -23,15 +21,12 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND+=" >=dev-libs/libev-4.20"
-RDEPEND+=" >=dev-libs/libev-4.20"
-
-RUBY_PATCHES=( "${PN}-1.1.0-libev.patch" )
+# cool.io includes a bundled version of libev that is patched to work correctly with ruby.
 
 ruby_add_rdepend ">=dev-ruby/iobuffer-1"
 
 all_ruby_prepare() {
-	rm -r Gemfile* ext/libev ext/cool.io/libev.c lib/.gitignore || die
+	rm -r Gemfile* lib/.gitignore || die
 
 	sed -i -e '/[Bb]undler/d' Rakefile || die
 	sed -i -e '28i  s.add_dependency "iobuffer"' ${RUBY_FAKEGEM_GEMSPEC} || die
@@ -46,21 +41,17 @@ all_ruby_prepare() {
 
 	# Use one address consistently
 	sed -i -e 's/localhost/127.0.0.1/' spec/{udp_socket,tcp_server,iobuffer}_spec.rb || die
-
-	# Remove specs that fail, possibly due to libev
-	# incompatibility. Should be investigated but cool.io is no longer
-	# maintained.
-	rm -f spec/udp_socket_spec.rb || die
 }
 
 each_ruby_configure() {
-	${RUBY} -Cext/cool.io extconf.rb || die
-	${RUBY} -Cext/iobuffer extconf.rb || die
+	pushd ext/cool.io || die
+	${RUBY} extconf.rb || die
+	popd || die
 }
 
 each_ruby_compile() {
-	emake V=1 -Cext/cool.io
+	pushd ext/cool.io || die
+	emake V=1
+	popd || die
 	cp ext/cool.io/cool.io_ext$(get_modname) lib/ || die
-	emake V=1 -Cext/iobuffer
-	cp ext/iobuffer/iobuffer_ext$(get_modname) lib/ || die
 }
