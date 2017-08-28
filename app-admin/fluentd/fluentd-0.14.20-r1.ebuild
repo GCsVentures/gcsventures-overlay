@@ -3,9 +3,13 @@
 # $Header: $
 
 EAPI=5
-USE_RUBY="ruby22 ruby23"
+USE_RUBY="ruby22 ruby23 ruby24"
 
-inherit ruby-fakegem user
+EGIT_REPO_URI="https://github.com/fluent/fluentd.git"
+EGIT_COMMIT="d926248f0d73a29272781b75414a0f7ce91b44ba"
+EGIT_CHECKOUT_DIR="${WORKDIR}/all"
+
+inherit ruby-fakegem user git-r3
 
 DESCRIPTION="an open source data collector designed to scale and simplify log management."
 HOMEPAGE="https://rubygems.org/gems/fluentd"
@@ -27,13 +31,13 @@ src_install() {
 }
 
 ruby_add_rdepend ">=dev-ruby/coolio-1.4.5"
-ruby_add_rdepend "!>=dev-ruby/coolio-1.5.0"
+ruby_add_rdepend "!>=dev-ruby/coolio-2.0.0"
 ruby_add_rdepend ">=dev-ruby/http_parser_rb-0.5.1"
 ruby_add_rdepend "!>=dev-ruby/http_parser_rb-0.7.0"
 ruby_add_rdepend ">=dev-ruby/json-1.4.3"
 ruby_add_rdepend ">=dev-ruby/msgpack-0.7.0"
 ruby_add_rdepend "!>=dev-ruby/msgpack-2.0.0"
-ruby_add_rdepend ">=dev-ruby/serverengine-2.0.0"
+ruby_add_rdepend ">=dev-ruby/serverengine-2.0.4"
 ruby_add_rdepend "!>=dev-ruby/serverengine-3.0.0"
 ruby_add_rdepend ">=dev-ruby/sigdump-0.2.2"
 ruby_add_rdepend "!>=dev-ruby/sigdump-0.3.0"
