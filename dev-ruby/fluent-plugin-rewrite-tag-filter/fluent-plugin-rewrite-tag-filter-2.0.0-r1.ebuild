@@ -5,9 +5,9 @@
 EAPI=5
 USE_RUBY="ruby22 ruby23 ruby24"
 
-EGIT_REPO_URI="git://github.com/okkez/${PN}.git"
-EGIT_BRANCH="migrate-v0.14-api"
-EGIT_COMMIT="04242a69be49f69505dc862c2d570a9450300294"
+EGIT_REPO_URI="git://github.com/fluent/${PN}.git"
+EGIT_BRANCH="master"
+EGIT_COMMIT="f1e06b2e9a5a7a81b48447a60f7dbb613484415b"
 
 
 inherit ruby-fakegem
