@@ -8,7 +8,7 @@ inherit git-r3
 
 DESCRIPTION="MySQL master HA node"
 HOMEPAGE="https://github.com/yoshinorim/mha4mysql-node"
-EGIT_REPO_URI="git://github.com/yoshinorim/mha4mysql-node"
+EGIT_REPO_URI="https://github.com/yoshinorim/mha4mysql-node.git"
 EGIT_COMMIT="1f6bc82cf0b37232ca810f33fd569c4b6d1b5887"
 
 LICENSE="GPL-2"
