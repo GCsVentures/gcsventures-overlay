@@ -9,7 +9,7 @@ inherit git-r3
 DESCRIPTION="MySQL master HA manager"
 HOMEPAGE="https://github.com/yoshinorim/mha4mysql-manager"
 EGIT_REPO_URI="https://github.com/yoshinorim/mha4mysql-manager.git"
-EGIT_COMMIT="c6db3eb66dec214a68dd5e9a51be1cda4ff19c8d"
+EGIT_COMMIT="c4755819aba7faea1d5d05f58f59c489431cbbf9"
 
 LICENSE="GPL-2"
 SLOT="0"

@@ -4,12 +4,12 @@
 
 EAPI=5
 
-inherit git-r3
+inherit git-r3 eutils
 
 DESCRIPTION="MySQL master HA node"
 HOMEPAGE="https://github.com/yoshinorim/mha4mysql-node"
-EGIT_REPO_URI="git://github.com/yoshinorim/mha4mysql-node"
-EGIT_COMMIT="cc38e28274ca31bca256ea60887495c788460aef"
+EGIT_REPO_URI="https://github.com/yoshinorim/mha4mysql-node.git"
+EGIT_COMMIT="1f6bc82cf0b37232ca810f33fd569c4b6d1b5887"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -21,7 +21,7 @@ DEPEND="dev-perl/DBD-mysql \
 RDEPEND="${DEPEND} !=dev-lang/perl-5.22.0"
 
 src_prepare() {
-	epatch ${FILESDIR}/mha_057_perl522_compat.patch
+	epatch ${FILESDIR}/mha_057_perl522_compat.patch || die
 }
 
 src_configure() {
