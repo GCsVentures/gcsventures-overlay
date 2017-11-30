@@ -4,7 +4,7 @@
 
 EAPI=6
 
-inherit unpacker user eutils flag-o-matic cmake-utils
+inherit unpacker user eutils flag-o-matic cmake-utils toolchain-funcs
 
 SRC_URI="https://github.com/mariadb-corporation/MaxScale/archive/${PV}.tar.gz"
 KEYWORDS=""
@@ -45,12 +45,17 @@ pkg_setup() {
 	enewuser maxscale -1 -1 -1 maxscale
 }
 
-S="${WORKDIR}/MaxScale-${PVR}"
+S="${WORKDIR}/MaxScale-${PV}"
 
 src_prepare() {
+    append-cflags $(test-flags-CC -Wno-error)
+	filter-flags -ftree-vectorize -floop-interchange -ftree-loop-distribution -floop-strip-mine -floop-block
+	replace-flags -O3 -O2
 	eapply "${FILESDIR}"/141_logmanager.patch
 	eapply "${FILESDIR}"/141_rpath.patch
 	eapply_user
+	cmake-utils_src_prepare
+	eapply "${FILESDIR}"/145_cmakelists.patch
 }
 
 src_configure() {
