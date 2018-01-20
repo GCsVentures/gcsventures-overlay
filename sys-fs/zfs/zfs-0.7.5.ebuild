@@ -1,9 +1,9 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
 EAPI="5"
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
+PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
 
 SRC_URI="https://github.com/zfsonlinux/${PN}/releases/download/${P}/${P}.tar.gz"
 KEYWORDS="~x86 ~amd64"
@@ -19,6 +19,7 @@ IUSE="custom-cflags debug kernel-builtin +rootfs test-suite static-libs"
 RESTRICT="test"
 
 COMMON_DEPEND="
+	net-libs/libtirpc
 	sys-apps/util-linux[static-libs?]
 	sys-libs/zlib[static-libs(+)?]
 	virtual/awk
@@ -57,8 +58,8 @@ AT_M4DIR="config"
 AUTOTOOLS_IN_SOURCE_BUILD="1"
 
 pkg_setup() {
+	linux-info_pkg_setup
 	if use kernel_linux && use test-suite; then
-		linux-info_pkg_setup
 		if  ! linux_config_exists; then
 			ewarn "Cannot check the linux kernel configuration."
 		else
@@ -86,6 +87,12 @@ src_prepare() {
 		-e "s|/sbin/parted|/usr/sbin/parted|" \
 		-i scripts/common.sh.in
 
+	if [ "$KV_EXTRA" == "-gcsventures" ] && kernel_is ge 4 14 ; then
+		ewarn "4.14+ -gcsventures kernel: disabling configure-time -Werror and patching for grsec compat"
+		epatch "${FILESDIR}/0.7.5-no-werror.patch"
+		epatch "${FILESDIR}/0.7.5-4.14-grsec-compat.patch"
+		eautoreconf
+	fi
 	autotools-utils_src_prepare
 }
 
