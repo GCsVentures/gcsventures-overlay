@@ -1,17 +1,11 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
 EAPI="5"
 
-if [[ ${PV} == "9999" ]] ; then
-	AUTOTOOLS_AUTORECONF="1"
-	EGIT_REPO_URI="https://github.com/zfsonlinux/${PN}.git"
-	inherit git-r3
-else
-	SRC_URI="https://github.com/zfsonlinux/zfs/releases/download/zfs-${PV}/${P}.tar.gz"
-	KEYWORDS=""
-fi
+SRC_URI="https://github.com/zfsonlinux/zfs/releases/download/zfs-${PV}/${P}.tar.gz"
+KEYWORDS="~amd64"
 
 inherit flag-o-matic linux-info linux-mod autotools-utils
 
@@ -20,7 +14,7 @@ HOMEPAGE="http://zfsonlinux.org/"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="custom-cflags debug"
+IUSE="custom-cflags debug kernel-builtin"
 RESTRICT="debug? ( strip ) test"
 
 COMMON_DEPEND="dev-lang/perl
@@ -55,7 +49,7 @@ pkg_setup() {
 	kernel_is ge 2 6 32 || die "Linux 2.6.32 or newer required"
 
 	[ ${PV} != "9999" ] && \
-		{ kernel_is le 4 12 || die "Linux 4.12 is the latest supported version."; }
+		{ kernel_is le 4 14 || die "Linux 4.14 is the latest supported version."; }
 
 	check_extra_config
 }
@@ -72,6 +66,11 @@ src_prepare() {
 	[ ${PV} != "9999" ] && \
 		{ sed -i "s/\(Release:\)\(.*\)1/\1\2${PR}-gentoo/" "${S}/META" || die "Could not set Gentoo release"; }
 
+	if [ "$KV_EXTRA" == "-gcsventures" ] && kernel_is ge 4 14 ; then
+		ewarn "4.14+ -gcsventures kernel: disabling configure-time -Werror compile flag"
+		epatch "${FILESDIR}/0.7.5-no-werror.patch"
+		eautoreconf
+	fi
 	autotools-utils_src_prepare
 }
 
@@ -87,6 +86,7 @@ src_configure() {
 		--with-linux="${KV_DIR}"
 		--with-linux-obj="${KV_OUT_DIR}"
 		$(use_enable debug)
+		$(use_enable kernel-builtin linux-builtin)
 	)
 	autotools-utils_src_configure
 }

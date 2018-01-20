@@ -8,5 +8,6 @@
   </maintainer>
   <use>
     <flag name="debug-log">Enable SPL debug log</flag>
+    <flag name="kernel-builtin">Assume SPL code is to be built into the kernel (note: not for regular usage)</flag>
   </use>
 </pkgmetadata>
