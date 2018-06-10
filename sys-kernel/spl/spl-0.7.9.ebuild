@@ -9,7 +9,7 @@ KEYWORDS="~amd64"
 
 inherit flag-o-matic linux-info linux-mod autotools-utils
 
-DESCRIPTION="The Solaris Porting Layer is a Linux kernel module which provides many of the Solaris kernel APIs"
+DESCRIPTION="The Solaris Porting Layer provides many of the Solaris kernel APIs"
 HOMEPAGE="http://zfsonlinux.org/"
 
 LICENSE="GPL-2"
@@ -34,7 +34,7 @@ pkg_setup() {
 	CONFIG_CHECK="
 		!DEBUG_LOCK_ALLOC
 		KALLSYMS
-		!PAX_KERNEXEC_PLUGIN_METHOD_OR
+		!PAX_KERNEXEC
 		ZLIB_DEFLATE
 		ZLIB_INFLATE
 	"
@@ -49,7 +49,7 @@ pkg_setup() {
 	kernel_is ge 2 6 32 || die "Linux 2.6.32 or newer required"
 
 	[ ${PV} != "9999" ] && \
-		{ kernel_is le 4 14 || die "Linux 4.14 is the latest supported version."; }
+		{ kernel_is le 4 16 || die "Linux 4.16 is the latest supported version."; }
 
 	check_extra_config
 }
@@ -68,7 +68,7 @@ src_prepare() {
 
 	if [ "$KV_EXTRA" == "-gcsventures" ] && kernel_is ge 4 14 ; then
 		ewarn "4.14+ -gcsventures kernel: disabling configure-time -Werror compile flag"
-		epatch "${FILESDIR}/0.7.5-no-werror.patch"
+		epatch "${FILESDIR}/0.7.7-no-werror.patch"
 		eautoreconf
 	fi
 	autotools-utils_src_prepare
