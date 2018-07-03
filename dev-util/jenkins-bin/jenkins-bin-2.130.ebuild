@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 
@@ -18,7 +17,7 @@ IUSE=""
 RDEPEND="media-fonts/dejavu
 	media-libs/freetype
 	!dev-util/jenkins-bin:lts
-	>=virtual/jre-1.7.0"
+	>=virtual/jre-1.8.0"
 
 S=${WORKDIR}
 
