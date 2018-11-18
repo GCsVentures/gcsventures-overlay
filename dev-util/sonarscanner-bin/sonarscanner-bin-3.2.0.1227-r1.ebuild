@@ -27,11 +27,14 @@ INSTALL_DIR="/opt/sonar-scanner"
 src_unpack() {
 	unpack ${A}
 
+	# TODO remove unneeded files
+}
+
+src_prepare() {
 	if ! use embedded_jre; then
 	   epatch "${FILESDIR}/${PN}-system_jre.patch"
 	fi
-
-	# TODO remove unneeded files
+	default
 }
 
 src_install() {
