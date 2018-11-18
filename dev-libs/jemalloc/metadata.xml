@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>guillaume@gcs-ventures.com</email>
+		<name>Guillaume Ceccarelli</name>
+	</maintainer>
+	<longdescription lang="en">
+		Jemalloc is a general-purpose scalable concurrent allocator. This fork off the main portage tree removes lazy locking and adds a linking fix.
+	</longdescription>
+	<use>
+		<flag name="stats">Enable statistics calculation/reporting</flag>
+		<flag name="xmalloc">Add support for xmalloc (abort-on-out-of-memory)</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">jemalloc/jemalloc</remote-id>
+	</upstream>
+</pkgmetadata>

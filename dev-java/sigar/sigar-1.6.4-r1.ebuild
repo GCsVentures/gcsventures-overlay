@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI="5"
 
@@ -19,7 +18,7 @@ RDEPEND=">=virtual/jre-1.4"
 
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
-    dev-java/cpptasks
+	  dev-java/cpptasks
 	>=dev-lang/perl-5.6.1
 	net-libs/libtirpc"
 
@@ -33,48 +32,48 @@ EANT_GENTOO_CLASSPATH="ant-core,cpptasks"
 EANT_NEEDS_TOOLS="true"
 
 src_prepare() {
-  epatch "${FILESDIR}"/jni-build.${PV}.patch
-  epatch "${FILESDIR}"/sigar-inline.${PV}.patch
+	epatch "${FILESDIR}"/jni-build.${PV}.patch
+	epatch "${FILESDIR}"/sigar-inline.${PV}.patch
 
-  PATCHFILE="${WORKDIR}/jni-build.patch"
-  COUNTERSTART=6
-  REPLACESTRING="tktktktk"
+	PATCHFILE="${WORKDIR}/jni-build.patch"
+	COUNTERSTART=6
+	REPLACESTRING="tktktktk"
 
-  counter=${COUNTERSTART}
-  echo "--- a/bindings/java/hyperic_jni/jni-build.xml       2016-06-25 15:17:08.487747593 +0000" > ${PATCHFILE}
-  echo "+++ b/bindings/java/hyperic_jni/jni-build.xml       2016-06-25 15:20:25.982657304 +0000" >> ${PATCHFILE}
-  echo "@@ -186,8 +186,${REPLACESTRING} @@" >> ${PATCHFILE}
-  echo ""  >> ${PATCHFILE}
-  echo "       <!-- Linux -->" >> ${PATCHFILE}
-  echo "       <compiler name=\"gcc\" debug=\"\${jni.debug}\" if=\"linux\">" >> ${PATCHFILE}
-  echo "-        <compilerarg value=\"-O2\" if=\"jni.optim\"/>" >> ${PATCHFILE}
-  echo "-        <compilerarg value=\"-g\" if=\"jni.debug\"/>" >> ${PATCHFILE}
-  for x in $CFLAGS; do
-    echo "+        <compilerarg value=\"$x\"/>" >> ${PATCHFILE}
-    counter=$((counter+1))
-  done
-  echo "         <compilerarg value=\"-Wall\"/>" >> ${PATCHFILE}
-  echo "         <compilerarg value=\"-Werror\" if=\"jni.werror\"/>" >> ${PATCHFILE}
-  echo "         <compilerarg value=\"\${jni.gccm}\" if=\"jni.gccm\"/>" >> ${PATCHFILE}
-  sed -i "s/${REPLACESTRING}/$counter/g" ${PATCHFILE} || die
-  patch -p1 < ${PATCHFILE} || die
+	counter=${COUNTERSTART}
+	echo "--- a/bindings/java/hyperic_jni/jni-build.xml       2016-06-25 15:17:08.487747593 +0000" > ${PATCHFILE}
+	echo "+++ b/bindings/java/hyperic_jni/jni-build.xml       2016-06-25 15:20:25.982657304 +0000" >> ${PATCHFILE}
+	echo "@@ -186,8 +186,${REPLACESTRING} @@" >> ${PATCHFILE}
+	echo ""  >> ${PATCHFILE}
+	echo "       <!-- Linux -->" >> ${PATCHFILE}
+	echo "       <compiler name=\"gcc\" debug=\"\${jni.debug}\" if=\"linux\">" >> ${PATCHFILE}
+	echo "-        <compilerarg value=\"-O2\" if=\"jni.optim\"/>" >> ${PATCHFILE}
+	echo "-        <compilerarg value=\"-g\" if=\"jni.debug\"/>" >> ${PATCHFILE}
+	for x in $CFLAGS; do
+	  echo "+        <compilerarg value=\"$x\"/>" >> ${PATCHFILE}
+	  counter=$((counter+1))
+	done
+	echo "         <compilerarg value=\"-Wall\"/>" >> ${PATCHFILE}
+	echo "         <compilerarg value=\"-Werror\" if=\"jni.werror\"/>" >> ${PATCHFILE}
+	echo "         <compilerarg value=\"\${jni.gccm}\" if=\"jni.gccm\"/>" >> ${PATCHFILE}
+	sed -i "s/${REPLACESTRING}/$counter/g" ${PATCHFILE} || die
+	patch -p1 < ${PATCHFILE} || die
 
-  epatch "${FILESDIR}"/no-werror.patch
-  epatch "${FILESDIR}"/sysmacros.patch
-  epatch "${FILESDIR}"/tirpc.patch
+	epatch "${FILESDIR}"/no-werror.patch
+	epatch "${FILESDIR}"/sysmacros.patch
+	epatch "${FILESDIR}"/tirpc.patch
 }
 
 src_compile() {
-  # Can be improved to fit the Gentoo way. Problem with using eant and JAVA_ANT_REWRITE_CLASSPATH is
-  # that jni-build.xml fails to be imported correctly, leading to build failure. 
-  export CLASSPATH="`java-config -r`:`java-config -d --classpath ant-core,cpptasks`"
-  ant -f ${EANT_BUILD_XML} -lib ${CLASSPATH} || die
+	# Can be improved to fit the Gentoo way. Problem with using eant and JAVA_ANT_REWRITE_CLASSPATH is
+	# that jni-build.xml fails to be imported correctly, leading to build failure. 
+	export CLASSPATH="`java-config -r`:`java-config -d --classpath ant-core,cpptasks`"
+	ant -f ${EANT_BUILD_XML} -lib ${CLASSPATH} || die
 }
 
 src_install() {
-  java-pkg_dojar "${S}/bindings/java/sigar-bin/lib/sigar.jar"
-  java-pkg_doso "${S}/bindings/java/sigar-bin/lib/libsigar-amd64-linux.so"
-  #mkdir -p "${D}/usr/share"
-  #cp -R "${S}/bindings/java/sigar-bin" "${D}/usr/share/"
-  #chmod +x "${D}/usr/share/sigar-bin/lib/libsigar-amd64-linux.so"
+	java-pkg_dojar "${S}/bindings/java/sigar-bin/lib/sigar.jar"
+	java-pkg_doso "${S}/bindings/java/sigar-bin/lib/libsigar-amd64-linux.so"
+	#mkdir -p "${D}/usr/share"
+	#cp -R "${S}/bindings/java/sigar-bin" "${D}/usr/share/"
+	#chmod +x "${D}/usr/share/sigar-bin/lib/libsigar-amd64-linux.so"
 }

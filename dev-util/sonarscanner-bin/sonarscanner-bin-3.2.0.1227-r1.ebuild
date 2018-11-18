@@ -1,6 +1,5 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
 EAPI=6
 
@@ -15,7 +14,7 @@ MY_P="sonar-scanner-cli-${MY_PV}-linux"
 SRC_URI="https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/${MY_P}.zip"
 RESTRICT="mirror"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE="embedded_jre"
 
 S="${WORKDIR}/sonar-scanner-${MY_PV}-linux"

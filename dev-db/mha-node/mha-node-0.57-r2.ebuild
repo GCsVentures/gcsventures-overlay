@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=5
 
@@ -17,11 +16,11 @@ KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="dev-perl/DBD-mysql \
-        dev-perl/Module-Install"
-RDEPEND="${DEPEND} !=dev-lang/perl-5.22.0"
+	dev-perl/Module-Install"
+RDEPEND="${DEPEND} !~dev-lang/perl-5.22.0"
 
 src_prepare() {
-	epatch ${FILESDIR}/mha_057_perl522_compat.patch || die
+	epatch "${FILESDIR}"/mha_057_perl522_compat.patch || die
 }
 
 src_configure() {

@@ -1,23 +1,16 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
-
-# Credit to https://github.com/salfter for the original ebuild
 
 EAPI="5"
-
-inherit versionator
 
 DESCRIPTION="A dependancy manager for PHP"
 HOMEPAGE="http://getcomposer.org"
 
-MY_PV=$(replace_version_separator _ -)
-
-SRC_URI="http://getcomposer.org/download/${MY_PV}/composer.phar -> ${PN}-${MY_PV}.phar"
+SRC_URI="http://getcomposer.org/download/${PV}/composer.phar -> ${P}.phar"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=">=dev-lang/php-5.3.4"
