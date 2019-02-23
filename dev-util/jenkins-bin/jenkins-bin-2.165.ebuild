@@ -8,7 +8,7 @@ inherit user systemd
 DESCRIPTION="Extensible continuous integration server"
 HOMEPAGE="https://jenkins.io/"
 LICENSE="MIT"
-SRC_URI="https://updates.jenkins-ci.org/download/war/${PV}/${PN/-bin/}.war -> ${P}.war"
+SRC_URI="https://updates.jenkins.io/download/war/${PV}/${PN/-bin/}.war -> ${P}.war"
 RESTRICT="mirror"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~amd64-linux"
