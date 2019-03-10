@@ -30,6 +30,7 @@ PDEPEND="app-misc/ca-certificates"
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-1.1.0j-parallel_install_fix.patch #671602
+	"${FILESDIR}"/${P}-CVE-2019-1543.patch
 )
 
 # This does not copy the entire Fedora patchset, but JUST the parts that
