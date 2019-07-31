@@ -248,9 +248,13 @@ multilib_src_install() {
 
 	# Work around split-usr-zfs-root-support ZFS root setups with split usr on a separate dataset
 	if use split-usr-zfs-root-support; then
-		mkdir -p "${ED}"/lib
-		cp -a "${ED}"/usr/lib/libcrypto.so.1.1 "${ED}"/lib64 || die
-		cp -a "${ED}"/usr/lib/libssl.so.1.1 "${ED}"/lib64 || die
+		local sixtyfour=""
+		if [ -d "${ED}"/usr/lib64 ]; then
+			sixtyfour="64"
+		fi
+		mkdir -p "${ED}"/lib"${sixtyfour}"
+		cp -a "${ED}"/usr/lib"${sixtyfour}"/libcrypto.so.1.1 "${ED}"/lib"${sixtyfour}" || die
+		cp -a "${ED}"/usr/lib"${sixtyfour}"/libssl.so.1.1 "${ED}"/lib"${sixtyfour}" || die
 	fi
 }
 
