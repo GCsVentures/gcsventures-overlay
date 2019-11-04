@@ -19,7 +19,7 @@ RDEPEND=""
 DEPEND="
 	sys-devel/bison
 	sys-devel/flex
-	pam? ( virtual/pam )"
+	pam? ( sys-libs/pam )"
 
 S="${WORKDIR}/${PN}"
 
