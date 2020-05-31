@@ -6,10 +6,10 @@ EAPI=6
 inherit linux-info toolchain-funcs eutils
 
 if [[ ${PV} == "9999" ]]; then
-	EGIT_REPO_URI="https://github.com/K1773R/numad.git"
+	EGIT_REPO_URI="https://github.com/yhaenggi/numad.git"
 	inherit git-r3
 else
-	SRC_URI="https://github.com/K1773R/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/yhaenggi/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 -arm -s390 ~x86"
 fi
 
@@ -21,9 +21,6 @@ SLOT="0"
 IUSE=""
 
 CONFIG_CHECK="~NUMA ~CPUSETS"
-
-#PATCHES=(
-#)
 
 src_prepare() {
 	default
