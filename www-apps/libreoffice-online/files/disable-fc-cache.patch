@@ -1,0 +1,9 @@
+diff -ruN a/test/Makefile.am b/test/Makefile.am
+--- a/test/Makefile.am	2020-06-16 16:49:46.045338967 +0000
++++ b/test/Makefile.am	2020-06-16 16:50:21.131335864 +0000
+@@ -198,5 +198,4 @@
+ 	@echo
+ 	@echo "Running build-time unit tests.  For more thorough testing, please run 'make check'."
+ 	@echo
+-	@fc-cache "@LO_PATH@"/share/fonts/truetype
+ 	@UNITTEST=1 ${top_builddir}/test/unittest

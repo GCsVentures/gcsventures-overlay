@@ -1,0 +1,11 @@
+diff -ruN a/kit/DummyLibreOfficeKit.cpp b/kit/DummyLibreOfficeKit.cpp
+--- a/kit/DummyLibreOfficeKit.cpp	2020-06-17 01:47:24.852067200 +0000
++++ b/kit/DummyLibreOfficeKit.cpp	2020-06-17 01:48:30.437708490 +0000
+@@ -11,6 +11,7 @@
+ 
+ #include "DummyLibreOfficeKit.hpp"
+ 
++#include <cstdlib>
+ #include <cstring>
+ #include <memory>
+ 

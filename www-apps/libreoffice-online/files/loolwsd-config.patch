@@ -1,0 +1,62 @@
+diff -ruN a/configure.ac b/configure.ac
+--- a/configure.ac	2020-06-16 16:33:01.758203167 +0000
++++ b/configure.ac	2020-06-16 16:34:05.819062338 +0000
+@@ -230,7 +230,7 @@
+ 
+ ENABLE_DEBUG=
+ LOOLWSD_LOGLEVEL="warning"
+-LOOLWSD_LOG_TO_FILE="false"
++LOOLWSD_LOG_TO_FILE="true"
+ LOOLWSD_LOGFILE="/var/log/loolwsd.log"
+ LOOLWSD_ANONYMIZE_USER_DATA=false
+ LOLEAFLET_LOGGING="false"
+diff -ruN a/loolwsd.xml.in b/loolwsd.xml.in
+--- a/loolwsd.xml.in	2020-06-16 16:37:32.709183891 +0000
++++ b/loolwsd.xml.in	2020-06-16 16:43:26.274540563 +0000
+@@ -5,11 +5,11 @@
+ 
+     <allowed_languages desc="List of supported languages of Writing Aids (spell checker, grammar checker, thesaurus, hyphenation) on this instance. Allowing too many has negative effect on startup performance." default="de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru">de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru</allowed_languages>
+ 
+-    <sys_template_path desc="Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes." type="path" relative="true" default="systemplate"></sys_template_path>
+-    <child_root_path desc="Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate. Must be an empty directory." type="path" relative="true" default="jails"></child_root_path>
++    <sys_template_path desc="Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes." type="path" relative="false" default="/var/lib/libreoffice-online/systemplate"></sys_template_path>
++    <child_root_path desc="Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate. Must be an empty directory." type="path" relative="false" default="/var/lib/libreoffice-online/jails">/var/lib/libreoffice-online/jails</child_root_path> 
+ 
+     <server_name desc="Hostname:port of the server running loolwsd. If empty, it's derived from the request." type="string" default=""></server_name>
+-    <file_server_root_path desc="Path to the directory that should be considered root for the file server. This should be the directory containing loleaflet." type="path" relative="true" default="loleaflet/../"></file_server_root_path>
++    <file_server_root_path desc="Path to the directory that should be considered root for the file server. This should be the directory containing loleaflet." type="path" relative="false" default="/usr/share/loolwsd">/usr/share/loolwsd</file_server_root_path>
+ 
+     <memproportion desc="The maximum percentage of system memory consumed by all of the LibreOffice Online, after which we start cleaning up idle documents" type="double" default="80.0"></memproportion>
+     <num_prespawn_children desc="Number of child processes to keep started in advance and waiting for new clients." type="uint" default="1">1</num_prespawn_children>
+@@ -43,7 +43,7 @@
+         <level type="string" desc="Can be 0-8, or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace" default="@LOOLWSD_LOGLEVEL@">@LOOLWSD_LOGLEVEL@</level>
+         <file enable="@LOOLWSD_LOG_TO_FILE@">
+             <property name="path" desc="Log file path.">@LOOLWSD_LOGFILE@</property>
+-            <property name="rotation" desc="Log file rotation strategy. See Poco FileChannel.">never</property>
++            <property name="rotation" desc="Log file rotation strategy. See Poco FileChannel.">weekly</property>
+             <property name="archive" desc="Append either timestamp or number to the archived log filename.">timestamp</property>
+             <property name="compress" desc="Enable/disable log file compression.">true</property>
+             <property name="purgeAge" desc="The maximum age of log files to preserve. See Poco FileChannel.">10 days</property>
+@@ -86,8 +86,8 @@
+     </net>
+ 
+     <ssl desc="SSL settings">
+-        <enable type="bool" desc="Controls whether SSL encryption between browser and loolwsd is enabled (do not disable for production deployment). If default is false, must first be compiled with SSL support to enable." default="@ENABLE_SSL@">@ENABLE_SSL@</enable>
+-        <termination desc="Connection via proxy where loolwsd acts as working via https, but actually uses http." type="bool" default="true">false</termination>
++	<enable type="bool" desc="Controls whether SSL encryption is enable. If default is false, must first be compiled with SSL support to enable." default="@ENABLE_SSL@">false</enable>
++	<termination desc="Connection via proxy where loolwsd acts as working via https, but actually uses http." type="bool" default="true">true</termination>
+         <cert_file_path desc="Path to the cert file" relative="false">/etc/loolwsd/cert.pem</cert_file_path>
+         <key_file_path desc="Path to the key file" relative="false">/etc/loolwsd/key.pem</key_file_path>
+         <ca_file_path desc="Path to the ca file" relative="false">/etc/loolwsd/ca-chain.cert.pem</ca_file_path>
+diff -ruN a/tools/Config.cpp b/tools/Config.cpp
+--- a/tools/Config.cpp	2020-06-16 16:35:04.128971636 +0000
++++ b/tools/Config.cpp	2020-06-16 16:36:07.497475674 +0000
+@@ -363,7 +363,7 @@
+     }
+     else if (args[0] == "update-system-template")
+     {
+-        const char command[] = "su lool --shell=/bin/sh -c 'loolwsd-systemplate-setup /opt/lool/systemplate " LO_PATH " >/dev/null 2>&1'";
++        const char command[] = "su lool --shell=/bin/sh -c 'loolwsd-systemplate-setup /var/lib/libreoffice-online/systemplate " LO_PATH " >/dev/null 2>&1'";
+         std::cout << "Running the following command:" << std::endl
+                   << command << std::endl;
+ 
