@@ -1,8 +1,9 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="6"
-inherit eapi7-ver flag-o-matic toolchain-funcs eutils udev
+EAPI=7
+
+inherit flag-o-matic toolchain-funcs udev
 
 MY_PV="$(ver_rs 2 -)"
 
@@ -17,16 +18,19 @@ IUSE="pam"
 
 RDEPEND=""
 DEPEND="
-	sys-devel/bison
-	sys-devel/flex
+	app-alternatives/yacc
+	app-alternatives/lex
 	pam? ( sys-libs/pam )"
 
-S="${WORKDIR}/${PN}"
+S=${WORKDIR}/${PN}
+
+PATCHES=(
+	"${FILESDIR}"/respect-gentoo-env-r3.patch
+)
 
 src_prepare() {
-	epatch "${FILESDIR}"/respect-gentoo-env-r3.patch
+	default
 	sed -i -e "s:/lib/udev:$(get_udevdir):" Makefile || die
-	eapply_user
 }
 
 src_compile() {
